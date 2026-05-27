@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DNSSeer - Shared domain mapping and protocol constants.
+DNSemble - Shared domain mapping and protocol constants.
 
 Maps 95 printable ASCII characters (0x20-0x7E) plus \\n, \\t, \\r
 to 98 well-known domains.  The domain queried IS the data channel.

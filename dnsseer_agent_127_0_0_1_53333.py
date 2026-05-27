@@ -14,10 +14,10 @@ import argparse
 from datetime import datetime
 
 # ── Configuration (baked at generation time) ─────────────────────────────
-SERVER_HOST = "{{SERVER_HOST}}"
-SERVER_PORT = {{SERVER_PORT}}
-DEFAULT_DELAY  = {{DELAY}}
-DEFAULT_JITTER = {{JITTER}}
+SERVER_HOST = "127.0.0.1"
+SERVER_PORT = 53333
+DEFAULT_DELAY  = 100
+DEFAULT_JITTER = 50
 
 # ── Domain pool & protocol constants ─────────────────────────────────────
 CONTROL_DOMAIN = "googleapis.com"
