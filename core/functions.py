@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DNSemble — Output helpers, ANSI colors, banner, and display functions.
+DNSemble - Output helpers, ANSI colors, banner, and display functions.
 """
 
 import sys
@@ -18,13 +18,24 @@ class C:
     mag  = "\033[95m"
     cyn  = "\033[96m"
 
+    @classmethod
+    def disable(cls):
+        """Strip ANSI codes (enabled automatically when not a TTY)."""
+        for attr in ("bold", "dim", "rst", "red", "grn", "ylw",
+                     "blu", "mag", "cyn"):
+            setattr(cls, attr, "")
+
+
+if not sys.stdout.isatty():
+    C.disable()
+
 
 BANNER = r"""
 {cyn}{bold}
     ____  _   _____                 __    __
    / __ \/ | / / ___/___  ____ ___  / /_  / /__
   / / / /  |/ /\__ \/ _ \/ __ `__ \/ __ \/ / _ \
- / /_/ / /|  /___/ /  __/ / / / / / /_/ / /  __/
+ / /_/ / /|  /___/ /  __/ / / / / /_/ / /  __/
 /_____/_/ |_//____/\___/_/ /_/ /_/_.___/_/\___/
 {rst}
   {dim}DNS Exfiltration Framework  ·  v1.0{rst}
@@ -43,6 +54,16 @@ def get_timestamp():
 
 def log(tag, color, msg):
     print(f"{C.dim}[{get_timestamp()}]{C.rst} {color}[{tag:>5s}]{C.rst} {msg}")
+
+
+def warn(msg):
+    log("WARN", C.ylw, msg)
+
+
+def fail(msg, code=1):
+    """Print an actionable error and exit nonzero (usage errors use 2)."""
+    print(f"{C.red}[!] {msg}{C.rst}", file=sys.stderr)
+    sys.exit(code)
 
 
 def list_payloads(payloads):

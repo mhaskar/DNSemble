@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import socket, struct, sys, os, time, random
 
-SERVER = "{{SERVER_HOST}}"
+SERVER = {{SERVER_HOST}}
 PORT = {{SERVER_PORT}}
 DELAY = {{DELAY}} / 1000.0
 JITTER = {{JITTER}} / 1000.0
